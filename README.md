@@ -55,21 +55,25 @@ A production-ready, single-page web application for real-time control and monito
 ### Installation
 
 1. **Clone or download the project**
+
 ```bash
 cd iot-bulb-control
 ```
 
 2. **Install dependencies**
+
 ```bash
 npm install
 ```
 
 3. **Start development server**
+
 ```bash
 npm run dev
 ```
 
 4. **Open in browser**
+
 ```
 http://localhost:5173
 ```
@@ -89,6 +93,7 @@ The production files will be in the `dist/` folder, ready to deploy to any stati
 1. **Open Settings** (click the gear icon in the header)
 
 2. **Configure MQTT Broker**
+
    - **Broker URL**: Enter your MQTT broker WebSocket URL
      - Local: `ws://localhost:9001` or `ws://192.168.1.100:9001`
      - Remote: `wss://your-broker.com:8083`
@@ -96,6 +101,7 @@ The production files will be in the `dist/` folder, ready to deploy to any stati
    - **Username/Password**: Optional, if your broker requires authentication
 
 3. **Test Connection**
+
    - Click "Test Connection" to verify settings
    - Connection status indicator will turn green when connected
 
@@ -106,12 +112,14 @@ The production files will be in the `dist/` folder, ready to deploy to any stati
 ### Adding Bulbs
 
 #### Manual Addition
+
 1. Click **"Add Bulb"** button in header
 2. Enter **Bulb ID** (must match your bulb's MQTT identifier)
 3. Optionally enter a friendly **Name** and **Room**
 4. Click **"Add Bulb"**
 
 #### Automatic Discovery
+
 1. Click **"Add Bulb"** → **"Scan Network"**
 2. App publishes discovery request to `bulb/discovery/request`
 3. Bulbs respond on `bulb/+/discovery/response`
@@ -169,6 +177,7 @@ bulb/+/discovery/response
 ### Option 1: Mosquitto (Self-Hosted)
 
 **Install Mosquitto**
+
 ```bash
 # Ubuntu/Debian
 sudo apt-get install mosquitto mosquitto-clients
@@ -199,17 +208,20 @@ password_file /etc/mosquitto/passwd
 ```
 
 **Create Users (if authentication enabled)**
+
 ```bash
 sudo mosquitto_passwd -c /etc/mosquitto/passwd mqtt_user
 ```
 
 **Start Mosquitto**
+
 ```bash
 sudo systemctl start mosquitto
 sudo systemctl enable mosquitto
 ```
 
 **Test Connection**
+
 ```bash
 # Terminal 1: Subscribe
 mosquitto_sub -h localhost -t "test" -v
@@ -238,6 +250,7 @@ docker run -d \
 ```
 
 Or with authentication:
+
 ```bash
 docker run -d \
   --name mosquitto \
@@ -252,21 +265,25 @@ docker run -d \
 ### Controlling Bulbs
 
 **Power Toggle**
+
 - Click the **ON/OFF** button on any bulb card
 - Optimistic UI update provides instant feedback
 - State confirmed when MQTT message received from gateway
 
 **Brightness Control** (if supported)
+
 - Drag the brightness slider
 - Changes throttled to avoid flooding MQTT broker
 - Final value sent when released
 
 **Edit Bulb**
+
 - Click the edit icon next to bulb name
 - Type new name and press Enter
 - Changes saved to IndexedDB immediately
 
 **Delete Bulb**
+
 - Click the trash icon
 - Confirm deletion
 - Bulb removed from database and unsubscribed from MQTT
@@ -274,32 +291,38 @@ docker run -d \
 ### Organizing Bulbs
 
 **Room Grouping**
+
 - Assign rooms when adding bulbs
 - Bulbs automatically grouped by room in the list
 - Filter by room using the search bar
 
 **Search**
+
 - Search by bulb name or ID
 - Real-time filtering as you type
 
 **Show/Hide Offline Bulbs**
+
 - Toggle "Show offline" checkbox
 - Useful for hiding disconnected bulbs
 
 ### Data Management
 
 **Export Data**
+
 1. Open Settings
 2. Click **"Export Data"**
 3. JSON file downloads with all bulbs, settings, and history
 
 **Import Data**
+
 1. Open Settings
 2. Click **"Import Data"**
 3. Select previously exported JSON file
 4. Page reloads with imported data
 
 **Clear All Data**
+
 1. Open Settings
 2. Click **"Clear All Data"**
 3. Confirm action (cannot be undone)
@@ -312,6 +335,7 @@ docker run -d \
 The app is a static SPA and can be deployed to any static hosting service:
 
 **Netlify**
+
 ```bash
 npm run build
 # Drag dist/ folder to Netlify dashboard
@@ -319,24 +343,28 @@ npm run build
 ```
 
 **Vercel**
+
 ```bash
 npm run build
 npx vercel --prod
 ```
 
 **GitHub Pages**
+
 ```bash
 npm run build
 # Copy dist/ contents to gh-pages branch
 ```
 
 **AWS S3 + CloudFront**
+
 ```bash
 npm run build
 aws s3 sync dist/ s3://your-bucket-name
 ```
 
 **Firebase Hosting**
+
 ```bash
 npm install -g firebase-tools
 firebase login
@@ -356,6 +384,7 @@ VITE_MQTT_PASSWORD=mqtt_pass
 ```
 
 Access in code:
+
 ```javascript
 const brokerUrl = import.meta.env.VITE_MQTT_BROKER_URL;
 ```
@@ -425,12 +454,14 @@ npm run lint         # Run ESLint
 ### Connection Issues
 
 **"Failed to connect to MQTT broker"**
+
 - ✅ Check broker URL format (`ws://` or `wss://`)
 - ✅ Verify broker is running: `mosquitto_sub -h localhost -t "#"`
 - ✅ Check firewall allows WebSocket port (usually 9001 or 8083)
 - ✅ Try with `allow_anonymous true` in Mosquitto config to rule out auth issues
 
 **"Connection closes immediately"**
+
 - ✅ Check browser console for CORS errors
 - ✅ Ensure broker has `protocol websockets` listener
 - ✅ Verify broker WebSocket port is different from MQTT port
@@ -438,12 +469,14 @@ npm run lint         # Run ESLint
 ### Bulb Control Issues
 
 **"Bulb doesn't respond to commands"**
+
 - ✅ Check bulb is online (green status indicator)
 - ✅ Verify gateway is subscribed to control topics
 - ✅ Test with MQTT CLI: `mosquitto_pub -t "bulb/test/control/power" -m '{"state":"ON"}'`
 - ✅ Check MQTT topic naming matches your gateway implementation
 
 **"State updates not appearing"**
+
 - ✅ Ensure gateway publishes to `bulb/<id>/state` topic
 - ✅ Check payload format matches expected JSON structure
 - ✅ Verify app is subscribed (check browser console logs)
@@ -451,12 +484,14 @@ npm run lint         # Run ESLint
 ### Data Persistence Issues
 
 **"Bulbs disappear after page refresh"**
+
 - ✅ Check browser supports IndexedDB (all modern browsers do)
 - ✅ Look for IndexedDB errors in console
 - ✅ Try clearing browser data and re-adding bulbs
 - ✅ Check storage quota hasn't been exceeded
 
 **"Settings not saving"**
+
 - ✅ Check browser allows IndexedDB for your domain
 - ✅ Verify not in private/incognito mode (some browsers restrict storage)
 - ✅ Check browser console for storage quota errors
@@ -464,6 +499,7 @@ npm run lint         # Run ESLint
 ### Network Issues
 
 **"Works on LAN but not remotely"**
+
 - ✅ Use `wss://` (secure WebSocket) for remote connections
 - ✅ Ensure broker has valid SSL certificate
 - ✅ Check broker allows external connections (not just localhost)
@@ -474,21 +510,21 @@ npm run lint         # Run ESLint
 ### IndexedDB Service
 
 ```javascript
-import { 
-  saveBulb, 
-  getBulb, 
-  getAllBulbs, 
+import {
+  saveBulb,
+  getBulb,
+  getAllBulbs,
   deleteBulb,
   exportData,
-  importData 
-} from './services/dbService';
+  importData,
+} from "./services/dbService";
 
 // Add/update bulb
 await saveBulb({
-  bulb_id: 'bulb_001',
-  name: 'Living Room Lamp',
-  state: 'ON',
-  brightness: 75
+  bulb_id: "bulb_001",
+  name: "Living Room Lamp",
+  state: "ON",
+  brightness: 75,
 });
 
 // Get all bulbs
@@ -501,37 +537,37 @@ const backup = await exportData();
 ### MQTT Service
 
 ```javascript
-import mqttService from './services/mqttService';
+import mqttService from "./services/mqttService";
 
 // Connect
 mqttService.connect({
-  url: 'ws://localhost:9001',
-  clientId: 'webapp_client_123'
+  url: "ws://localhost:9001",
+  clientId: "webapp_client_123",
 });
 
 // Control bulb
-await mqttService.controlPower('bulb_001', 'ON');
-await mqttService.controlBrightness('bulb_001', 80);
+await mqttService.controlPower("bulb_001", "ON");
+await mqttService.controlBrightness("bulb_001", 80);
 
 // Subscribe to state
-mqttService.subscribeToBulbState('bulb_001', (topic, payload) => {
-  console.log('State update:', payload);
+mqttService.subscribeToBulbState("bulb_001", (topic, payload) => {
+  console.log("State update:", payload);
 });
 ```
 
 ### Custom Hooks
 
 ```javascript
-import { useBulbs } from './hooks/useBulbs';
-import { useMQTT } from './hooks/useMQTT';
+import { useBulbs } from "./hooks/useBulbs";
+import { useMQTT } from "./hooks/useMQTT";
 
 function MyComponent() {
   const { bulbs, toggleBulb, addBulb } = useBulbs();
   const { mqtt, connect, disconnect } = useMQTT();
-  
+
   return (
     <div>
-      {bulbs.map(bulb => (
+      {bulbs.map((bulb) => (
         <button onClick={() => toggleBulb(bulb.bulb_id)}>
           {bulb.name}: {bulb.state}
         </button>

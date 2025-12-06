@@ -14,6 +14,7 @@ Open your browser to: **http://localhost:5173**
 ### Step 2: Set Up MQTT Broker (Testing)
 
 **Option A: Use Public Test Broker** (Easiest - No Setup Required)
+
 - In Settings, use: `ws://test.mosquitto.org:8080`
 - No authentication needed
 - ⚠️ Not for production use
@@ -21,20 +22,23 @@ Open your browser to: **http://localhost:5173**
 **Option B: Local Mosquitto** (Recommended for Testing)
 
 1. **Install Mosquitto:**
+
    - Windows: Download from https://mosquitto.org/download/
    - Mac: `brew install mosquitto`
    - Linux: `sudo apt-get install mosquitto`
 
 2. **Start with WebSocket support:**
+
    ```bash
    mosquitto -c mosquitto.conf
    ```
 
 3. **Test it's working:**
+
    ```bash
    # Terminal 1
    mosquitto_sub -h localhost -t "test"
-   
+
    # Terminal 2
    mosquitto_pub -h localhost -t "test" -m "Hello"
    ```
@@ -60,16 +64,19 @@ Open your browser to: **http://localhost:5173**
 If you want to simulate bulbs for testing:
 
 1. **Install Python MQTT library:**
+
    ```bash
    pip install paho-mqtt
    ```
 
 2. **Run the gateway simulator:**
+
    ```bash
    python gateway_simulator.py
    ```
 
 3. **The simulator will:**
+
    - Create 3 test bulbs (bulb_001, bulb_002, bulb_003)
    - Respond to control commands
    - Publish state updates
@@ -87,38 +94,44 @@ If you want to simulate bulbs for testing:
 ✅ **Organize by rooms** - Group your bulbs  
 ✅ **Search bulbs** - Find them quickly  
 ✅ **Export/Import data** - Backup your configuration  
-✅ **Dark mode** - Toggle in settings  
+✅ **Dark mode** - Toggle in settings
 
 ## 🔧 Troubleshooting
 
 ### "Cannot connect to MQTT broker"
+
 - ✅ Make sure Mosquitto is running: `ps aux | grep mosquitto`
 - ✅ Check the WebSocket port is correct (usually 9001)
 - ✅ Try the test broker: `ws://test.mosquitto.org:8080`
 
 ### "Bulb doesn't respond"
+
 - ✅ Make sure you're using the simulator or real gateway
 - ✅ Check the bulb ID matches exactly
 - ✅ Look at browser console (F12) for errors
 
 ### "Settings not saving"
+
 - ✅ Check browser allows IndexedDB (not in private mode)
 - ✅ Clear browser cache and try again
 
 ## 🌐 Deploy to Production
 
 ### Build for deployment:
+
 ```bash
 npm run build
 ```
 
 ### Deploy the `dist/` folder to:
+
 - **Netlify**: Drag and drop `dist/` folder
 - **Vercel**: `npx vercel --prod`
 - **GitHub Pages**: Copy to gh-pages branch
 - **Any static host**: Upload `dist/` contents
 
 ### For production MQTT:
+
 - Use **WSS** (secure WebSocket): `wss://your-broker.com:8083`
 - Enable **authentication** on your broker
 - Use **SSL/TLS certificates**
@@ -134,16 +147,19 @@ npm run build
 ## 🎯 Example MQTT Messages
 
 ### Turn bulb ON:
+
 ```bash
 mosquitto_pub -t "bulb/bulb_001/control/power" -m '{"state":"ON"}'
 ```
 
 ### Set brightness to 75%:
+
 ```bash
 mosquitto_pub -t "bulb/bulb_001/control/brightness" -m '{"brightness":75}'
 ```
 
 ### Publish state (from gateway):
+
 ```bash
 mosquitto_pub -t "bulb/bulb_001/state" -m '{"state":"ON","brightness":75,"timestamp":"2025-12-06T14:30:00Z"}' -r
 ```

@@ -7,6 +7,7 @@ A complete, production-ready web application for controlling IoT smart bulbs via
 ## ✅ Completed Implementation
 
 ### Core Architecture
+
 - ✅ React 18 with functional components and hooks
 - ✅ Vite for fast development and optimized builds
 - ✅ TailwindCSS for responsive, mobile-first UI
@@ -14,7 +15,9 @@ A complete, production-ready web application for controlling IoT smart bulbs via
 - ✅ IndexedDB (via idb wrapper) for client-side persistence
 
 ### Services Layer
+
 1. **MQTT Service** (`src/services/mqttService.js`)
+
    - Connection management with auto-reconnect
    - Message publish/subscribe with QoS support
    - Topic pattern matching with wildcards
@@ -31,6 +34,7 @@ A complete, production-ready web application for controlling IoT smart bulbs via
    - Migration-ready schema
 
 ### State Management
+
 - **AppContext** (`src/contexts/AppContext.jsx`)
   - Centralized state with useReducer
   - MQTT connection state management
@@ -39,7 +43,9 @@ A complete, production-ready web application for controlling IoT smart bulbs via
   - Settings management
 
 ### Custom Hooks
+
 1. **useBulbs** (`src/hooks/useBulbs.js`)
+
    - Add/update/delete bulbs
    - Toggle power with optimistic updates
    - Set brightness and color
@@ -57,6 +63,7 @@ A complete, production-ready web application for controlling IoT smart bulbs via
 1. **Header** - App title, connection status, add bulb, settings
 2. **ConnectionStatus** - Real-time MQTT connection indicator
 3. **BulbCard** - Individual bulb control with:
+
    - Power toggle
    - Brightness slider
    - Inline name editing
@@ -65,6 +72,7 @@ A complete, production-ready web application for controlling IoT smart bulbs via
    - Last updated timestamp
 
 4. **BulbList** - Master view with:
+
    - Search functionality
    - Room-based grouping
    - Show/hide offline bulbs
@@ -72,6 +80,7 @@ A complete, production-ready web application for controlling IoT smart bulbs via
    - Empty state handling
 
 5. **AddBulbDialog** - Modal for adding bulbs:
+
    - Form validation
    - Manual ID entry
    - Network discovery
@@ -88,6 +97,7 @@ A complete, production-ready web application for controlling IoT smart bulbs via
 ### Utilities
 
 1. **Constants** (`src/utils/constants.js`)
+
    - Database configuration
    - MQTT topics
    - Default settings
@@ -95,6 +105,7 @@ A complete, production-ready web application for controlling IoT smart bulbs via
    - Validation patterns
 
 2. **Validators** (`src/utils/validators.js`)
+
    - Bulb ID validation
    - Brightness range checking
    - Color hex validation
@@ -108,6 +119,7 @@ A complete, production-ready web application for controlling IoT smart bulbs via
    - Text truncation
 
 ### Styling
+
 - Complete TailwindCSS integration
 - Dark mode support
 - Responsive grid layouts (mobile/tablet/desktop)
@@ -118,12 +130,14 @@ A complete, production-ready web application for controlling IoT smart bulbs via
 ## 🎯 Key Features Implemented
 
 ### Real-time Control
+
 - ✅ Instant power ON/OFF with optimistic UI updates
 - ✅ Brightness control with throttled MQTT messages
 - ✅ Color control (infrastructure ready)
 - ✅ Rollback on MQTT failure
 
 ### State Synchronization
+
 - ✅ Subscribe to bulb state topics on addition
 - ✅ Update UI immediately on MQTT messages
 - ✅ Persist all changes to IndexedDB
@@ -131,6 +145,7 @@ A complete, production-ready web application for controlling IoT smart bulbs via
 - ✅ Multi-client synchronization
 
 ### Offline Support
+
 - ✅ Message queuing when disconnected
 - ✅ Auto-flush queue on reconnection
 - ✅ All data persisted in IndexedDB
@@ -138,6 +153,7 @@ A complete, production-ready web application for controlling IoT smart bulbs via
 - ✅ Graceful degradation
 
 ### Data Management
+
 - ✅ Export all data as JSON
 - ✅ Import configuration from file
 - ✅ Clear all data option
@@ -145,6 +161,7 @@ A complete, production-ready web application for controlling IoT smart bulbs via
 - ✅ History tracking (ready for UI)
 
 ### MQTT Protocol
+
 - ✅ Control topics for power/brightness/color
 - ✅ State update topics from gateway
 - ✅ Status/online monitoring
@@ -183,6 +200,7 @@ iot-bulb-control/
 ## 📊 Technical Specifications
 
 ### Dependencies
+
 ```json
 {
   "react": "^18.x",
@@ -196,12 +214,14 @@ iot-bulb-control/
 ```
 
 ### Browser Support
+
 - Chrome/Edge 90+
 - Firefox 88+
 - Safari 14+
 - All browsers with IndexedDB and WebSocket support
 
 ### Performance
+
 - First contentful paint: < 1s
 - Time to interactive: < 2s
 - Bundle size: ~150KB (gzipped)
@@ -210,11 +230,13 @@ iot-bulb-control/
 ## 🚀 Deployment Ready
 
 ### Build Command
+
 ```bash
 npm run build
 ```
 
 ### Deploy To
+
 - ✅ Netlify
 - ✅ Vercel
 - ✅ GitHub Pages
@@ -223,6 +245,7 @@ npm run build
 - ✅ Any static hosting service
 
 ### Production Checklist
+
 - ✅ Minified and optimized build
 - ✅ Source maps disabled
 - ✅ Environment variable support
@@ -234,7 +257,9 @@ npm run build
 ## 📚 Documentation
 
 ### Included Documentation
+
 1. **README.md** (Comprehensive)
+
    - Installation guide
    - MQTT broker setup (3 options)
    - Configuration instructions
@@ -245,12 +270,14 @@ npm run build
    - Deployment guide
 
 2. **QUICKSTART.md**
+
    - 3-minute setup guide
    - Step-by-step instructions
    - Testing with simulator
    - Common issues and fixes
 
 3. **Code Comments**
+
    - All services heavily commented
    - JSDoc-style function documentation
    - Inline explanations for complex logic
@@ -263,6 +290,7 @@ npm run build
 ## 🔧 Testing Tools Provided
 
 1. **Gateway Simulator** (Python)
+
    - Simulates 3 test bulbs
    - Responds to control commands
    - Publishes state updates
@@ -277,6 +305,7 @@ npm run build
 ## 🎨 UI/UX Features
 
 ### Design
+
 - Clean, modern interface
 - Intuitive bulb cards with controls
 - Clear visual feedback
@@ -285,6 +314,7 @@ npm run build
 - Success confirmations
 
 ### Responsiveness
+
 - Mobile-first design
 - Breakpoints: 640px, 1024px
 - 1-4 column layouts
@@ -292,6 +322,7 @@ npm run build
 - Optimized for all screen sizes
 
 ### Accessibility
+
 - Semantic HTML
 - ARIA labels (can be enhanced)
 - Keyboard navigation support
@@ -311,6 +342,7 @@ npm run build
 ## 🎯 Future Enhancements (Not Implemented)
 
 The following features are designed but not implemented:
+
 - PWA support (service workers)
 - Push notifications
 - Scene management
@@ -334,6 +366,7 @@ The following features are designed but not implemented:
 ## ✨ Highlights
 
 ### What Makes This Special
+
 1. **Zero Backend** - Completely serverless, runs in browser
 2. **Offline First** - Works without internet after initial load
 3. **Real-time** - Sub-second updates across all clients
@@ -345,6 +378,7 @@ The following features are designed but not implemented:
 ## 🎓 Learning Value
 
 This project demonstrates:
+
 - Advanced React patterns (Context, Hooks, Reducers)
 - Real-world state management
 - MQTT/WebSocket communication
