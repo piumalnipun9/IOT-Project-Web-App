@@ -1,0 +1,27 @@
+{
+  "name": "iot-bulb-control",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext js,jsx"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.1",
+    "autoprefixer": "^10.4.22",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.4"
+  },
+  "dependencies": {
+    "idb": "^8.0.3",
+    "lucide-react": "^0.556.0",
+    "mqtt": "^5.14.1",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1"
+  }
+}
